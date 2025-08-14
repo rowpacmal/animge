@@ -35,7 +35,7 @@ function App() {
 
   return (
     <div className='flex flex-col items-center justify-center h-screen gap-4'>
-      <h1 className='text-5xl font-bold uppercase select-none'>Animg</h1>
+      <h1 className='text-5xl font-bold uppercase select-none'>Animge</h1>
 
       {isGenerating && <p>Generating image...</p>}
       {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
