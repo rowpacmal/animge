@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import useTextToImage from './hooks/useTextToImage';
+import PromptBox from './components/ui/PromptBox';
 
 function App() {
   const { generatedImage, isGenerating, errorMessage, generateImage } =
@@ -29,10 +30,6 @@ function App() {
     setSeedInput(Math.floor(Math.random() * 1000000000));
   }
 
-  useEffect(() => {
-    console.log(isRandomSeed);
-  }, [isRandomSeed]);
-
   return (
     <div className='flex flex-col items-center justify-center h-screen gap-4'>
       <h1 className='text-5xl font-bold uppercase select-none'>Animge</h1>
@@ -40,13 +37,7 @@ function App() {
       {isGenerating && <p>Generating image...</p>}
       {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
 
-      <textarea
-        className='border border-gray-300 rounded py-2 px-4 w-96'
-        rows={4}
-        value={promptInput}
-        placeholder='Enter prompt...'
-        onChange={(e) => setPromptInput(e.target.value)}
-      />
+      <PromptBox promptInput={promptInput} setPromptInput={setPromptInput} />
 
       <div className='flex gap-4'>
         <label className='flex items-center gap-4'>
