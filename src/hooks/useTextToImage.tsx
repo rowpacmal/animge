@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import responseHandler from '../utils/responseHandler';
+import { MODEL, QUALITY_TAGS, STYLE_TAGS } from '../constants';
 
 function useTextToImage() {
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
@@ -20,42 +21,9 @@ function useTextToImage() {
     setIsGenerating(true);
     setErrorMessage(null);
 
-    const model = 'flux';
-    const qualityTags = [
-      'masterpiece',
-      'absurdres',
-      'best quality',
-      // 'perfect quality',
-      // 'newest',
-      // 'detailed background',
-      // 'intricate details',
-    ];
-    const styleTags = ['anime style'];
-    const negativeTags = [
-      'lowres',
-      'worst quality',
-      'low quality',
-      // 'bad anatomy',
-      // 'bad hands',
-      // 'missing fingers',
-      // 'extra digit',
-      // 'fewer digits',
-      // 'cropped',
-      // 'error',
-      // 'blurry',
-      // 'signature',
-      // 'copyright',
-      // 'watermark',
-      // 'artist name',
-      // 'text',
-    ];
-
     try {
-      const url = `https://image.pollinations.ai/prompt/Prompt:${qualityTags.join()},${styleTags.join()},${prompt}.Negative prompt:${negativeTags.join()}.?model=${model}&seed=${seed}&width=${width}&height=${height}&nologo=true`;
-
-      console.log(url.replaceAll(' ', '%20'));
-
-      const response = await responseHandler(url);
+      const url = `https://image.pollinations.ai/prompt/Prompt:${QUALITY_TAGS.join()},${STYLE_TAGS.join()},${prompt}?model=${MODEL}&seed=${seed}&width=${width}&height=${height}&nologo=true`;
+      const response = await responseHandler(url.replaceAll(' ', '%20'));
 
       if (response) {
         setGeneratedImage(response);
