@@ -35,7 +35,7 @@ function App() {
     <>
       <AppHeader />
 
-      <main className='flex flex-col items-center justify-center h-screen gap-4'>
+      <main className='flex flex-col items-center max-w-[1280px] mx-auto justify-center gap-4'>
         {isGenerating && <p>Generating image...</p>}
         {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
 

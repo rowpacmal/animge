@@ -3,3 +3,11 @@
 body {
   @apply bg-gray-900 text-gray-50;
 }
+
+button {
+  @apply cursor-pointer;
+}
+
+#root {
+  @apply min-h-screen w-screen flex flex-col items-center gap-4;
+}
