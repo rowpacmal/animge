@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useTextToImage from './hooks/useTextToImage';
 import PromptBox from './components/ui/PromptBox';
+import AppHeader from './components/ui/AppHeader';
 
 function App() {
   const { generatedImage, isGenerating, errorMessage, generateImage } =
@@ -31,53 +32,55 @@ function App() {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center h-screen gap-4'>
-      <h1 className='text-5xl font-bold uppercase select-none'>Animge</h1>
+    <>
+      <AppHeader />
 
-      {isGenerating && <p>Generating image...</p>}
-      {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
+      <main className='flex flex-col items-center justify-center h-screen gap-4'>
+        {isGenerating && <p>Generating image...</p>}
+        {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
 
-      <PromptBox promptInput={promptInput} setPromptInput={setPromptInput} />
+        <PromptBox promptInput={promptInput} setPromptInput={setPromptInput} />
 
-      <div className='flex gap-4'>
-        <label className='flex items-center gap-4'>
-          <span>Random seed?</span>
+        <div className='flex gap-4'>
+          <label className='flex items-center gap-4'>
+            <span>Random seed?</span>
+
+            <input
+              className='mr-2'
+              type='checkbox'
+              checked={isRandomSeed}
+              onChange={(e) => setIsRandomSeed(e.target.checked)}
+            />
+          </label>
 
           <input
-            className='mr-2'
-            type='checkbox'
-            checked={isRandomSeed}
-            onChange={(e) => setIsRandomSeed(e.target.checked)}
+            className='border border-gray-300 rounded py-2 px-4 w-32'
+            type='number'
+            value={seedInput}
+            onChange={(e) => setSeedInput(parseInt(e.target.value))}
           />
-        </label>
 
-        <input
-          className='border border-gray-300 rounded py-2 px-4 w-32'
-          type='number'
-          value={seedInput}
-          onChange={(e) => setSeedInput(parseInt(e.target.value))}
-        />
+          <button
+            className='bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'
+            onClick={() => {
+              if (isRandomSeed) {
+                randomSeed();
+              }
+              generateImage(promptInput, 1184, 1584, seedInput);
 
-        <button
-          className='bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'
-          onClick={() => {
-            if (isRandomSeed) {
-              randomSeed();
-            }
-            generateImage(promptInput, 1184, 1584, seedInput);
+              console.log(seedInput);
+            }}
+            disabled={isGenerating}
+          >
+            Generate
+          </button>
+        </div>
 
-            console.log(seedInput);
-          }}
-          disabled={isGenerating}
-        >
-          Generate
-        </button>
-      </div>
-
-      {image && (
-        <img className='mt-4 max-w-96' src={image} alt='Generated image' />
-      )}
-    </div>
+        {image && (
+          <img className='mt-4 max-w-96' src={image} alt='Generated image' />
+        )}
+      </main>
+    </>
   );
 }
 
