@@ -1,0 +1,53 @@
+@import 'tailwindcss';
+@plugin "daisyui";
+
+:root {
+  @apply text-gray-50/87 bg-gray-950;
+
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  @apply text-indigo-500 font-semibold cursor-pointer transition-[color] duration-250 hover:text-indigo-600;
+
+  text-decoration: inherit;
+}
+
+body {
+  @apply m-0 flex place-items-center min-w-[320px] min-h-screen;
+}
+
+h1 {
+  @apply text-[3.2em]/[1.1];
+}
+
+button {
+  @apply rounded-lg border-[1px] border-transparent py-[0.6em] px-[1.2em] font-semibold bg-gray-800 cursor-pointer transition-[border] duration-250 hover:border-indigo-600;
+
+  font-family: inherit;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    @apply text-gray-950/87 bg-gray-50;
+  }
+  a {
+    @apply hover:text-indigo-400;
+  }
+  button {
+    @apply bg-gray-200 hover:border-indigo-400;
+  }
+}
