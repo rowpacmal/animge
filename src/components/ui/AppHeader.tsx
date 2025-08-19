@@ -6,7 +6,7 @@ function AppHeader() {
 
   return (
     <>
-      <header className='flex justify-between items-center p-4 bg-gray-950 w-full shadow-lg'>
+      <header className='flex justify-between items-center p-4 bg-gray-900 w-full shadow-lg'>
         <a className='flex items-center' href='/'>
           <IconSparkles size={32} />
 
@@ -25,8 +25,8 @@ function AppHeader() {
       </header>
 
       {isInfoOpen && (
-        <div className='absolute top-0 left-0 w-full h-full bg-gray-950/50 flex justify-center items-center z-50'>
-          <div className='bg-gray-950 p-4 rounded shadow-lg'>
+        <div className='absolute top-0 left-0 w-full h-full bg-gray-950/75 flex justify-center items-center z-50'>
+          <div className='bg-gray-900 p-4 rounded shadow-lg'>
             <div className='flex justify-between items-center mb-4'>
               <h2 className='text-2xl font-bold mb-2'>About</h2>
 
