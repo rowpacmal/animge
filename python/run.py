@@ -3,6 +3,8 @@ from fastapi.responses import StreamingResponse
 import io
 from app.schemas import PromptRequest
 from app.model import generate_image
+from pathlib import Path
+from platformdirs import user_documents_dir
 
 
 app = FastAPI()
@@ -20,10 +22,11 @@ def generate(req: PromptRequest):
         seed=req.seed,
     )
 
-    # Save image to in-memory bytes
-    img_bytes = io.BytesIO()
-    image.save(img_bytes, format="PNG")
-    img_bytes.seek(0)
+    documents = Path(user_documents_dir())
+    save_dir = documents / "MyApp"
+    save_dir.mkdir(parents=True, exist_ok=True)
 
-    # You could also include used_seed in headers or JSON response if needed
-    return StreamingResponse(img_bytes, media_type="image/png")
+    file_path = save_dir / f"generated_{used_seed}.png"
+    image.save(file_path, format="PNG")
+
+    return {"path": str(file_path), "seed": used_seed}
