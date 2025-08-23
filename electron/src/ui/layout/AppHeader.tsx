@@ -19,7 +19,7 @@ export function AppHeader() {
   return (
     <header className={styles.header}>
       <div className={styles['h-container']}>
-        <IconSparkles size={32} className={styles.highlight} />
+        <IconSparkles className={styles.highlight + ' size-8'} />
 
         <h1 className={styles.h1}>
           An<span className={styles.highlight}>img</span>e
