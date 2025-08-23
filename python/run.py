@@ -1,10 +1,12 @@
 # Standard libraries
 import io
 from pathlib import Path
+from uuid import uuid4
 
 # Third-party libraries
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
+from PIL import PngImagePlugin
 from platformdirs import user_documents_dir
 
 # Local application imports
@@ -36,11 +38,19 @@ def generate(req: PromptRequest):
     save_dir = documents / "Animge" / "temp"
     save_dir.mkdir(parents=True, exist_ok=True)
 
+    png_info = PngImagePlugin.PngInfo()
     file_paths = []
 
     for index, image in enumerate(images):
-        file_path = save_dir / f"temp_{index}.png"
-        image.save(file_path, format="PNG")
+        uuid = str(uuid4()).replace("-", "_")
+        file_path = save_dir / f"temp_{uuid}.png"
+        params = (
+            f"{req.prompt}\n\n"
+            f"Negative prompt: {req.negative_prompt}\n"
+            f"Steps: {req.steps}, Sampler: Euler a, CFG scale: {req.cfg_scale}, Seed: {used_seeds[index]}, Size: {req.width}x{req.height}"
+        )
+        png_info.add_text("parameters", params)
+        image.save(file_path, format="PNG", pnginfo=png_info)
         file_paths.append(str(file_path))
 
     # Return temp image paths and used seeds

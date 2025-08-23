@@ -36,7 +36,7 @@ def generate_image(
     width=1024,
     height=1024,
     steps=28,
-    cfg_scale=7.0,
+    cfg_scale=5.0,
     seed=0,
     batch_size=1,
 ):
