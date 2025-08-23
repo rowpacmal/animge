@@ -17,7 +17,7 @@
 }
 
 .button-container {
-  @apply flex-none;
+  @apply flex-none flex gap-2;
 }
 
 .button {
