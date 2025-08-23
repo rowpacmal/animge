@@ -1,7 +1,7 @@
 @reference "../styles/index.css";
 
 .main {
-  @apply flex-1 p-4;
+  @apply flex-1 flex flex-col xl:grid xl:grid-cols-[1fr_1.5fr_1fr] p-4 gap-4;
 }
 
 .dotted-background {
