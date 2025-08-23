@@ -1,16 +1,19 @@
-import { IconSettings } from '@tabler/icons-react';
+import { IconSettings, IconSparkles } from '@tabler/icons-react';
+import styles from '../styles/AppHeader.module.css';
 
 export function AppHeader() {
   return (
-    <header className="navbar bg-base-100 shadow-sm">
-      <div className="flex-1">
-        <h1 className="text-2xl uppercase">
-          An<span className="text-primary">img</span>e
+    <header className={styles.header}>
+      <div className={styles['h-container']}>
+        <IconSparkles size={32} className={styles.highlight} />
+
+        <h1 className={styles.h1}>
+          An<span className={styles.highlight}>img</span>e
         </h1>
       </div>
 
-      <div className="flex-none">
-        <button className="btn btn-square btn-ghost">
+      <div className={styles['button-container']}>
+        <button className={styles.button}>
           <IconSettings size={24} />
         </button>
       </div>

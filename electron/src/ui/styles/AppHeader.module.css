@@ -1,0 +1,25 @@
+@reference "./index.css";
+
+.header {
+  @apply navbar bg-base-200 shadow-sm;
+}
+
+.h-container {
+  @apply flex-1 flex items-center gap-1 select-none;
+}
+
+.h1 {
+  @apply text-3xl uppercase;
+}
+
+.highlight {
+  @apply text-secondary;
+}
+
+.button-container {
+  @apply flex-none;
+}
+
+.button {
+  @apply btn btn-secondary btn-soft btn-circle;
+}
