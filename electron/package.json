@@ -21,6 +21,7 @@
     "dist:linux": "npm run transpile:electron && npm run build && electron-builder --linux --x64"
   },
   "dependencies": {
+    "@tabler/icons-react": "^3.34.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
