@@ -1,4 +1,4 @@
-import { AppFooter, AppHeader } from './layout';
+import { AppFooter, AppHeader, AppMain } from './layout';
 import './styles/App.css';
 
 function App() {
@@ -6,9 +6,7 @@ function App() {
     <>
       <AppHeader />
 
-      <main className="flex-1 p-4 dotted-background">
-        <p>Main</p>
-      </main>
+      <AppMain />
 
       <AppFooter />
     </>
