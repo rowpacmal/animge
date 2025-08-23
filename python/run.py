@@ -20,7 +20,7 @@ app = FastAPI()
 @app.post("/generate")
 def generate(req: PromptRequest):
     # Generate image from user request
-    image, used_seed = generate_image(
+    images, used_seeds = generate_image(
         prompt=req.prompt,
         negative_prompt=req.negative_prompt,
         width=req.width,
@@ -28,15 +28,20 @@ def generate(req: PromptRequest):
         steps=req.steps,
         cfg_scale=req.cfg_scale,
         seed=req.seed,
+        batch_size=req.batch_size,
     )
 
-    # Save temp image locally in the user's documents folder
+    # Save temp images locally in the user's documents folder
     documents = Path(user_documents_dir())
     save_dir = documents / "Animge" / "temp"
     save_dir.mkdir(parents=True, exist_ok=True)
 
-    file_path = save_dir / f"temp_{used_seed}.png"
-    image.save(file_path, format="PNG")
+    file_paths = []
 
-    # Return temp image path and used seed
-    return {"path": str(file_path), "seed": used_seed}
+    for index, image in enumerate(images):
+        file_path = save_dir / f"temp_{index}.png"
+        image.save(file_path, format="PNG")
+        file_paths.append(str(file_path))
+
+    # Return temp image paths and used seeds
+    return {"paths": file_paths, "seeds": used_seeds}
