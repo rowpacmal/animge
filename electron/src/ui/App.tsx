@@ -1,4 +1,4 @@
-import { AppFooter, AppHeader } from './components';
+import { AppFooter, AppHeader } from './layout';
 import './styles/App.css';
 
 function App() {
