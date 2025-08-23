@@ -5,7 +5,7 @@
 }
 
 .h-container {
-  @apply flex-1 flex items-center gap-1 select-none;
+  @apply flex-1 flex items-center gap-1;
 }
 
 .h1 {
