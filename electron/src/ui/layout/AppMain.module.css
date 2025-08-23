@@ -1,4 +1,4 @@
-@reference "./index.css";
+@reference "../styles/index.css";
 
 .main {
   @apply flex-1 p-4;

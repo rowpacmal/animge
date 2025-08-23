@@ -1,4 +1,4 @@
-import styles from '../styles/AppFooter.module.css';
+import styles from './AppFooter.module.css';
 
 export function AppFooter() {
   return (

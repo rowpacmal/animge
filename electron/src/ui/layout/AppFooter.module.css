@@ -1,4 +1,4 @@
-@reference "./index.css";
+@reference "../styles/index.css";
 
 .footer {
   @apply bg-primary text-gray-50 p-4;

@@ -1,5 +1,5 @@
 import { IconSettings, IconSparkles } from '@tabler/icons-react';
-import styles from '../styles/AppHeader.module.css';
+import styles from './AppHeader.module.css';
 
 export function AppHeader() {
   return (

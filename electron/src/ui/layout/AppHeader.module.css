@@ -1,4 +1,4 @@
-@reference "./index.css";
+@reference "../styles/index.css";
 
 .header {
   @apply navbar bg-base-200 shadow-sm;
