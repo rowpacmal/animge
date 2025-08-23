@@ -13,7 +13,7 @@ export function Collapse({
 
   return (
     <div className="max-w-lg mx-auto">
-      <div className="collapse collapse-arrow bg-base-100 border-base-300 border">
+      <div className="collapse collapse-arrow bg-base-100 border-primary border">
         <input
           type="checkbox"
           checked={isOpen}

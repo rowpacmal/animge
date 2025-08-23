@@ -17,12 +17,12 @@ import temp6_img from '../assets/temp/temp6.jpeg';
 
 export function AppMain() {
   const [images] = useState([
-    // temp1_img,
-    // temp2_img,
-    // temp3_img,
-    // temp4_img,
-    // temp5_img,
-    // temp6_img,
+    temp1_img,
+    temp2_img,
+    temp3_img,
+    temp4_img,
+    temp5_img,
+    temp6_img,
   ]);
 
   return (
@@ -34,7 +34,7 @@ export function AppMain() {
       <div className="flex flex-col gap-4 w-full max-w-lg mx-auto xl:max-w-none order-3 xl:order-2">
         <div className="flex flex-col gap-4">
           <textarea
-            className="textarea resize-none h-32 w-full"
+            className="textarea resize-none h-32 w-full border-secondary focus-visible:outline-secondary"
             placeholder="You can generate images by entering prompts here."
           ></textarea>
 
@@ -49,7 +49,7 @@ export function AppMain() {
         </div>
 
         <div className="flex-1 flex justify-center items-center">
-          <div className="carousel w-full max-w-md h-full max-h-[448px] mx-auto rounded-lg border border-base-300 bg-base-300/50">
+          <div className="carousel w-full max-w-md h-full max-h-[448px] mx-auto rounded-lg border border-primary bg-base-300/50">
             {images.length > 0 ? (
               <>
                 {images.map((url, i) => (
@@ -94,7 +94,7 @@ export function AppMain() {
               </>
             ) : (
               <div className="w-full h-full flex justify-center items-center">
-                <IconPhotoFilled className="size-8 text-secondary/25" />
+                <IconPhotoFilled className="size-8 text-primary" />
               </div>
             )}
           </div>
