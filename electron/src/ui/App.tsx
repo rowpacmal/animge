@@ -1,4 +1,4 @@
-import { AppHeader } from './components';
+import { AppFooter, AppHeader } from './components';
 import './styles/App.css';
 
 function App() {
@@ -6,13 +6,11 @@ function App() {
     <>
       <AppHeader />
 
-      <main className="flex-1">
+      <main className="flex-1 p-4 dotted-background">
         <p>Main</p>
       </main>
 
-      <footer>
-        <p>Footer</p>
-      </footer>
+      <AppFooter />
     </>
   );
 }
