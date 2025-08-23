@@ -9,3 +9,4 @@ class PromptRequest(BaseModel):
     steps: int = 28
     cfg_scale: float = 7.0
     seed: int = 0
+    batch_size: int = 1
