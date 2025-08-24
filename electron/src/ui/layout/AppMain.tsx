@@ -8,21 +8,21 @@ import {
 import { useState } from 'react';
 import { AdvanceSettings, UserTasks } from '../components';
 import styles from './AppMain.module.css';
-import temp1_img from '../assets/temp/temp1.jpeg';
-import temp2_img from '../assets/temp/temp2.jpeg';
-import temp3_img from '../assets/temp/temp3.jpeg';
-import temp4_img from '../assets/temp/temp4.jpeg';
-import temp5_img from '../assets/temp/temp5.jpeg';
-import temp6_img from '../assets/temp/temp6.jpeg';
+// import temp1_img from '../assets/temp/temp1.jpeg';
+// import temp2_img from '../assets/temp/temp2.jpeg';
+// import temp3_img from '../assets/temp/temp3.jpeg';
+// import temp4_img from '../assets/temp/temp4.jpeg';
+// import temp5_img from '../assets/temp/temp5.jpeg';
+// import temp6_img from '../assets/temp/temp6.jpeg';
 
 export function AppMain() {
   const [images] = useState([
-    temp1_img,
-    temp2_img,
-    temp3_img,
-    temp4_img,
-    temp5_img,
-    temp6_img,
+    // temp1_img,
+    // temp2_img,
+    // temp3_img,
+    // temp4_img,
+    // temp5_img,
+    // temp6_img,
   ]);
 
   return (
@@ -93,7 +93,7 @@ export function AppMain() {
                 ))}
               </>
             ) : (
-              <div className="w-full h-full flex justify-center items-center">
+              <div className="w-full h-full min-h-[448px] flex justify-center items-center">
                 <IconPhotoFilled className="size-8 text-primary" />
               </div>
             )}
