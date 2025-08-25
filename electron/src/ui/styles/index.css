@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+
+body {
+  @apply m-0 flex place-items-center min-w-[320px] min-h-screen select-none;
+}
+
+#root {
+  @apply w-screen h-screen min-h-[720px] flex flex-col;
+}

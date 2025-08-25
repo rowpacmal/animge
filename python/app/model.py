@@ -1,17 +1,18 @@
+# Third-party libraries
+from accelerate import Accelerator
 from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion import (
     StableDiffusionPipeline,
 )
 from diffusers.schedulers.scheduling_euler_ancestral_discrete import (
     EulerAncestralDiscreteScheduler,
 )
-from accelerate import Accelerator
 import torch
 
 # Accelerator handles GPU/CPU device
 accelerator = Accelerator()
 device = accelerator.device
 
-# Load Illustrious XL
+# Load AnimagineXL v4.0 model
 model_id = "cagliostrolab/animagine-xl-4.0"
 pipe = StableDiffusionPipeline.from_pretrained(
     model_id,
@@ -28,17 +29,27 @@ pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(pipe.scheduler.conf
 pipe.to(device)
 
 
+# Generate images
 def generate_image(
     prompt,
     negative_prompt=None,
     width=1024,
     height=1024,
     steps=28,
-    cfg_scale=7.0,
+    cfg_scale=5.0,
     seed=0,
+    batch_size=1,
 ):
-    # Generate image
-    generator = torch.Generator(device=device).manual_seed(seed)
+    generators, used_seeds = [], []
+
+    # Generate random seeds
+    for i in range(batch_size):
+        current_seed = seed + i
+        generator = torch.Generator(device=device).manual_seed(current_seed)
+        generators.append(generator)
+        used_seeds.append(current_seed)
+
+    # Create the image outputs
     output = pipe(
         prompt=prompt,
         negative_prompt=negative_prompt,
@@ -46,8 +57,10 @@ def generate_image(
         height=height,
         num_inference_steps=steps,
         guidance_scale=cfg_scale,
-        generator=generator,
-        num_images_per_prompt=1,
+        num_images_per_prompt=batch_size,
+        generator=generators,
     )
-    image = output.images[0]  # type: ignore
-    return image, seed
+    images = output.images  # type: ignore
+
+    # Return images and used seeds
+    return images, used_seeds

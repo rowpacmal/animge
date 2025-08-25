@@ -1,0 +1,5 @@
+@reference "../styles/index.css";
+
+.footer {
+  @apply bg-primary text-primary-content p-4;
+}

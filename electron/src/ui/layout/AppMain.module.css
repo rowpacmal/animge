@@ -1,0 +1,53 @@
+@reference "../styles/index.css";
+
+.main {
+  @apply flex-1;
+}
+
+.main-container {
+  @apply flex flex-col xl:grid xl:grid-cols-[1fr_1.5fr_1fr] p-4 gap-4 max-w-[1440px] mx-auto;
+}
+
+@keyframes move-dots {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 40px 40px;
+  }
+}
+
+.dotted-background {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-base-content) 20%, transparent) 1.5px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+  animation: move-dots 10s linear infinite;
+}
+
+@keyframes rotate-border {
+  to {
+    transform: rotate(1turn); /* A full 360-degree rotation */
+  }
+}
+
+.moving-border::before {
+  content: '';
+  position: absolute;
+  top: -200%;
+  left: -100%;
+  width: 300%;
+  height: 500%;
+  background: conic-gradient(
+    var(--color-secondary),
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    var(--color-secondary)
+  );
+  animation: rotate-border 5s linear infinite;
+  z-index: 0;
+}
