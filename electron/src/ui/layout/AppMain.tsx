@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { AdvanceSettings, UserTasks } from '../components';
 import styles from './AppMain.module.css';
 import { Carousel } from '../components/templates';
-// import temp1_img from '../assets/temp/temp1.jpeg';
-// import temp2_img from '../assets/temp/temp2.jpeg';
-// import temp3_img from '../assets/temp/temp3.jpeg';
-// import temp4_img from '../assets/temp/temp4.jpeg';
-// import temp5_img from '../assets/temp/temp5.jpeg';
-// import temp6_img from '../assets/temp/temp6.jpeg';
+// import temp1_img from '../assets/temp/temp1.png';
+// import temp2_img from '../assets/temp/temp2.png';
+// import temp3_img from '../assets/temp/temp3.png';
+// import temp4_img from '../assets/temp/temp4.png';
+// import temp5_img from '../assets/temp/temp5.png';
+// import temp6_img from '../assets/temp/temp6.png';
 
 export function AppMain() {
   const [images] = useState([
