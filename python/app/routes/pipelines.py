@@ -1,15 +1,10 @@
-# Standard libraries
-from pathlib import Path
-from uuid import uuid4
-
 # Third-party libraries
 from fastapi import APIRouter, HTTPException
-from PIL import PngImagePlugin
-from platformdirs import user_documents_dir
 
 # Local application imports
-from app.controllers import generate_image
+from app.controllers import generate_images
 from app.schemas import PromptRequest
+from app.utils import save_images
 
 
 # Initialize router
@@ -17,13 +12,13 @@ txt2img_router = APIRouter()
 
 
 # API Endpoint
-@txt2img_router.post("/{version}/generate")
+@txt2img_router.post("/{version}/txt2img")
 def generate(version: str, req: PromptRequest):
     if version != "v4":
         raise HTTPException(status_code=404, detail="Version not found")
 
     # Generate image from user request
-    images, used_seeds = generate_image(
+    images, used_seeds = generate_images(
         prompt=req.prompt,
         negative_prompt=req.negative_prompt,
         width=req.width,
@@ -34,25 +29,17 @@ def generate(version: str, req: PromptRequest):
         batch_size=req.batch_size,
     )
 
-    # Save temp images locally in the user's documents folder
-    documents = Path(user_documents_dir())
-    save_dir = documents / "Animge" / "temp"
-    save_dir.mkdir(parents=True, exist_ok=True)
+    # Save images locally in the user's documents folder
+    task_id, file_paths = save_images(
+        images,
+        req.prompt,
+        req.negative_prompt,
+        req.width,
+        req.height,
+        req.steps,
+        req.cfg_scale,
+        used_seeds,
+    )
 
-    png_info = PngImagePlugin.PngInfo()
-    file_paths = []
-
-    for index, image in enumerate(images):
-        uuid = str(uuid4()).replace("-", "_")
-        file_path = save_dir / f"temp_{uuid}.png"
-        params = (
-            f"{req.prompt}\n\n"
-            f"Negative prompt: {req.negative_prompt}\n"
-            f"Steps: {req.steps}, Sampler: Euler a, CFG scale: {req.cfg_scale}, Seed: {used_seeds[index]}, Size: {req.width}x{req.height}"
-        )
-        png_info.add_text("parameters", params)
-        image.save(file_path, format="PNG", pnginfo=png_info)
-        file_paths.append(str(file_path))
-
-    # Return temp image paths and used seeds
-    return {"paths": file_paths, "seeds": used_seeds}
+    # Return task id, image paths and used seeds
+    return {"id": task_id, "paths": file_paths, "seeds": used_seeds}
