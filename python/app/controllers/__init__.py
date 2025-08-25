@@ -1,1 +1,1 @@
-from .model import generate_image
+from .generate_images import generate_images

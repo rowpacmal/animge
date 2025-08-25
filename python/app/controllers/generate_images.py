@@ -30,7 +30,7 @@ pipe.to(device)
 
 
 # Generate images
-def generate_image(
+def generate_images(
     prompt,
     negative_prompt=None,
     width=1024,
