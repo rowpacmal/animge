@@ -12,12 +12,12 @@ versions_router = APIRouter(prefix="/{model_name}/versions")
 
 # API Endpoints
 @models_router.get("/")
-async def list_models():
+def list_models():
     return MODEL_TYPES
 
 
 @versions_router.get("/")
-async def list_versions(model_name: str):
+def list_versions(model_name: str):
     if model_name not in MODEL_VERSIONS:
         raise HTTPException(status_code=404, detail="Model not found")
 

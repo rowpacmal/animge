@@ -18,7 +18,7 @@ api_router = APIRouter(prefix="/api/v1")
 
 # API Endpoints
 @api_router.get("/")
-async def root():
+def root():
     return {"message": "Welcome to Animge API v1"}
 
 
