@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 # Third-party libraries
 from accelerate import Accelerator
 from fastapi import FastAPI, APIRouter, Request
+from fastapi.middleware.cors import CORSMiddleware
 
 # Local application imports
 from app.routes import downloads_router, pipelines_router
@@ -17,7 +18,6 @@ async def lifespan(app: FastAPI):
     accelerator = Accelerator()
     app.state.accelerator = accelerator
     app.state.device = accelerator.device
-    app.state.model_path = None
 
     yield
 
@@ -35,6 +35,22 @@ app = FastAPI(
 
 # API Router
 api_router = APIRouter(prefix="/api/v1")
+
+
+# CORS
+origins = [
+    "http://localhost:5123",  # frontend dev server
+    "http://127.0.0.1:5123",
+    "http://localhost:8000",  # allow same-origin
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # API Endpoints

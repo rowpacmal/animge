@@ -20,21 +20,20 @@ def list_downloads():
     return ["model"]
 
 
-@download_model_router.post("/")
-async def download_model(api: Request):
+@download_model_router.get("/")
+async def download_model():
     async def event_stream():
         loop = asyncio.get_event_loop()
         queue: asyncio.Queue = asyncio.Queue()
 
         def run_download():
-            model_path = snapshot_download(repo_id=MODEL_ID, cache_dir=str(CACHE_DIR))
-            api.app.state.model_path = model_path
-            loop.call_soon_threadsafe(queue.put_nowait, f"DONE:{MODEL_ID}")
+            snapshot_download(repo_id=MODEL_ID, cache_dir=str(CACHE_DIR))
+            loop.call_soon_threadsafe(queue.put_nowait, f"DONE")
 
         threading.Thread(target=run_download, daemon=True).start()
 
         # Send "STARTED" first
-        await queue.put(f"STARTED:{MODEL_ID}")
+        await queue.put(f"STARTED")
 
         while True:
             progress = await queue.get()
