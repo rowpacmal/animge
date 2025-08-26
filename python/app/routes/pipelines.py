@@ -8,15 +8,18 @@ from app.utils import save_images
 
 
 # Initialize router
-txt2img_router = APIRouter()
+pipelines_router = APIRouter(prefix="/pipelines", tags=["pipelines"])
+text_to_image_router = APIRouter(prefix="/text-to-image")
 
 
 # API Endpoint
-@txt2img_router.post("/{version}/txt2img")
-def generate(version: str, req: PromptRequest):
-    if version != "v4":
-        raise HTTPException(status_code=404, detail="Version not found")
+@pipelines_router.get("/")
+def list_pipelines():
+    return ["text-to-image"]
 
+
+@text_to_image_router.post("/")
+def text_to_image(req: PromptRequest):
     # Generate image from user request
     images, used_seeds = generate_images(
         prompt=req.prompt,
@@ -43,3 +46,6 @@ def generate(version: str, req: PromptRequest):
 
     # Return task id, image paths and used seeds
     return {"id": task_id, "paths": file_paths, "seeds": used_seeds}
+
+
+pipelines_router.include_router(text_to_image_router)

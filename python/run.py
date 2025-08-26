@@ -6,7 +6,7 @@ from accelerate import Accelerator
 from fastapi import FastAPI, APIRouter, Request
 
 # Local application imports
-from app.routes import downloads_router, models_router
+from app.routes import downloads_router, pipelines_router
 
 
 # Initialize FastAPI
@@ -17,7 +17,7 @@ async def lifespan(app: FastAPI):
     accelerator = Accelerator()
     app.state.accelerator = accelerator
     app.state.device = accelerator.device
-    app.state.pipe = None
+    app.state.model_path = None
 
     yield
 
@@ -29,7 +29,7 @@ app = FastAPI(
     lifespan=lifespan,
     title="Animge API",
     version="1.0",
-    description="AI text2img/img2img generation API for Animge",
+    description="AI text-to-image generation API for Animge",
 )
 
 
@@ -40,10 +40,10 @@ api_router = APIRouter(prefix="/api/v1")
 # API Endpoints
 @api_router.get("/")
 def root(api: Request):
-    return {**vars(api.app.state), "detail": "Welcome to Animge API v1"}
+    return {"detail": "Welcome to Animge API v1"}
 
 
 # Include routers
 api_router.include_router(downloads_router)
-api_router.include_router(models_router)
+api_router.include_router(pipelines_router)
 app.include_router(api_router)

@@ -1,10 +1,11 @@
 # Standard libraries
-from pathlib import Path
 from uuid import uuid4
 
 # Third-party libraries
 from PIL import PngImagePlugin
-from platformdirs import user_documents_dir
+
+# Local application imports
+from app.constants import TEMP_DIR
 
 
 def save_images(
@@ -17,16 +18,15 @@ def save_images(
     cfg_scale: float,
     used_seeds: list[int],
 ):
-    documents = Path(user_documents_dir())
     task_id = str(uuid4()).replace("-", "_")
-    save_dir = documents / "Animge" / "temp" / task_id
-    save_dir.mkdir(parents=True, exist_ok=True)
+    task_dir = TEMP_DIR / task_id
+    task_dir.mkdir(parents=True, exist_ok=True)
 
     png_info = PngImagePlugin.PngInfo()
     file_paths = []
 
     for index, image in enumerate(images):
-        file_path = save_dir / f"{index:02}.png"
+        file_path = task_dir / f"{index:02}.png"
         params = (
             f"{prompt}\n\n"
             f"Negative prompt: {negative_prompt}\n"
