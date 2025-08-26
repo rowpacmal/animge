@@ -1,1 +1,1 @@
-from .models import MODEL_TYPES, MODEL_VERSIONS
+from .constants import MODEL_TYPES, MODEL_VERSIONS

@@ -8,14 +8,21 @@ from diffusers.schedulers.scheduling_euler_ancestral_discrete import (
 )
 import torch
 
+from pathlib import Path
+from platformdirs import user_documents_dir
+
 # Accelerator handles GPU/CPU device
 accelerator = Accelerator()
 device = accelerator.device
 
 # Load AnimagineXL v4.0 model
 model_id = "cagliostrolab/animagine-xl-4.0"
+documents = Path(user_documents_dir())
+cache_dir = documents / "Animge" / "models"
+cache_dir.mkdir(parents=True, exist_ok=True)
 pipe = StableDiffusionPipeline.from_pretrained(
     model_id,
+    cache_dir=str(cache_dir),
     torch_dtype=torch.float16,
     use_safetensors=True,
     custom_pipeline="lpw_stable_diffusion_xl",
