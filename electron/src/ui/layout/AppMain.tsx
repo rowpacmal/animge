@@ -3,22 +3,64 @@ import { useState } from 'react';
 import { AdvanceSettings, UserTasks } from '../components';
 import styles from './AppMain.module.css';
 import { Carousel } from '../components/templates';
-// import temp1_img from '../assets/temp/temp1.png';
-// import temp2_img from '../assets/temp/temp2.png';
-// import temp3_img from '../assets/temp/temp3.png';
-// import temp4_img from '../assets/temp/temp4.png';
-// import temp5_img from '../assets/temp/temp5.png';
-// import temp6_img from '../assets/temp/temp6.png';
 
 export function AppMain() {
-  const [images] = useState([
-    // temp1_img,
-    // temp2_img,
-    // temp3_img,
-    // temp4_img,
-    // temp5_img,
-    // temp6_img,
-  ]);
+  const [images, setImages] = useState<string[]>([]);
+  const [prompt, setPrompt] = useState(
+    '1boy, bara, solo, male focus, muscular male, random hair style, random hair color, random outfit, random pose, random angle, random background, looking at viewer,'
+  );
+  const [qualityTags] = useState(
+    'masterpiece, high score, great score, absurdres'
+  );
+  const [negativePrompt] = useState(
+    'lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry'
+  );
+  const [width] = useState(896);
+  const [height] = useState(1152);
+  const [steps] = useState(28);
+  const [cfgScale] = useState(5.0);
+  // const [seed, setSeed] = useState(0);
+  const [batchSize, setBatchSize] = useState(1);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  async function handleGenerateImage() {
+    try {
+      setIsGenerating(true);
+      const response = await fetch(
+        'http://localhost:8000/api/v1/pipelines/text-to-image',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt: prompt + ', ' + qualityTags,
+            negative_prompt: negativePrompt,
+            width,
+            height,
+            steps,
+            cfg_scale: cfgScale,
+            seed: Math.floor(Math.random() * 1000000000),
+            batch_size: batchSize,
+            quality_tags: qualityTags,
+          }),
+        }
+      );
+      const data = await response.json();
+      // console.log(data);
+      // data.paths.forEach(async (path: string) => {
+      //   const content: string = `file:///${path.replace(/\\/g, '/')}`;
+      //   // console.log(content);
+      //   setImages((images) => [...images, content]);
+      // });
+
+      setImages(data.paths);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsGenerating(false);
+    }
+  }
 
   return (
     <main className={`${styles.main} ${styles['dotted-background']}`}>
@@ -42,13 +84,32 @@ export function AppMain() {
               <textarea
                 className="textarea resize-none h-32 w-full border-secondary focus-visible:outline-secondary relative z-10"
                 placeholder="You can generate images by entering prompts here."
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
               ></textarea>
             </div>
 
             <div className="flex justify-between">
-              <div></div>
+              <div>
+                <select
+                  className="select select-secondary"
+                  disabled={isGenerating}
+                  value={batchSize}
+                  onChange={(e) => setBatchSize(parseInt(e.target.value))}
+                >
+                  {[1, 2, 3, 4].map((n) => (
+                    <option key={n} value={n}>
+                      Number of images: {n}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-              <button className="flex gap-4 btn btn-secondary">
+              <button
+                className="flex gap-4 btn btn-secondary"
+                onClick={handleGenerateImage}
+                disabled={isGenerating}
+              >
                 <IconPhotoFilled />
                 <span>Generate Image</span>
               </button>
