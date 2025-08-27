@@ -1,5 +1,5 @@
 import { IconPhotoFilled } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AdvanceSettings, UserTasks } from '../components';
 import styles from './AppMain.module.css';
 import { Carousel } from '../components/templates';
@@ -22,6 +22,12 @@ export function AppMain() {
   // const [seed, setSeed] = useState(0);
   const [batchSize, setBatchSize] = useState(1);
   const [isGenerating, setIsGenerating] = useState(false);
+
+  useEffect(() => {
+    (async function () {
+      console.log('tasks: ', await window.electron.getTempFolder());
+    })();
+  }, []);
 
   async function handleGenerateImage() {
     try {
