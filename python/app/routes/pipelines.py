@@ -1,8 +1,8 @@
 # Third-party libraries
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Request
 
 # Local application imports
-from app.controllers import generate_images
+from app.controllers import generate_image_text_to_image
 from app.schemas import PromptRequest
 from app.utils import save_images
 
@@ -19,9 +19,11 @@ def list_pipelines():
 
 
 @text_to_image_router.post("/")
-def text_to_image(req: PromptRequest):
+def text_to_image(req: PromptRequest, api: Request):
     # Generate image from user request
-    images, used_seeds = generate_images(
+    images, used_seeds = generate_image_text_to_image(
+        pipe=api.app.state.pipe,
+        device=api.app.state.device,
         prompt=req.prompt,
         negative_prompt=req.negative_prompt,
         width=req.width,

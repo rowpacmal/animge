@@ -18,6 +18,7 @@ async def lifespan(app: FastAPI):
     accelerator = Accelerator()
     app.state.accelerator = accelerator
     app.state.device = accelerator.device
+    app.state.pipe = None
 
     yield
 

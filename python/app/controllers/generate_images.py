@@ -3,36 +3,13 @@ from accelerate import Accelerator
 from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion import (
     StableDiffusionPipeline,
 )
-from diffusers.schedulers.scheduling_euler_ancestral_discrete import (
-    EulerAncestralDiscreteScheduler,
-)
 import torch
-
-from app.constants import CACHE_DIR, MODEL_ID
-
-# Accelerator handles GPU/CPU device
-accelerator = Accelerator()
-device = accelerator.device
-
-# Load AnimagineXL v4.0 model
-pipe = StableDiffusionPipeline.from_pretrained(
-    MODEL_ID,
-    cache_dir=str(CACHE_DIR),
-    torch_dtype=torch.float16,
-    use_safetensors=True,
-    custom_pipeline="lpw_stable_diffusion_xl",
-    add_watermarker=False,
-)
-
-# Replace scheduler with Euler A
-pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(pipe.scheduler.config)
-
-# Move model to device
-pipe.to(device)
 
 
 # Generate images
-def generate_images(
+def generate_image_text_to_image(
+    pipe: StableDiffusionPipeline,
+    device: torch.device,
     prompt,
     negative_prompt=None,
     width=1024,
@@ -44,7 +21,7 @@ def generate_images(
 ):
     generators, used_seeds = [], []
 
-    # Generate random seeds
+    # Generate used seeds
     for i in range(batch_size):
         current_seed = seed + i
         generator = torch.Generator(device=device).manual_seed(current_seed)

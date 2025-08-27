@@ -1,1 +1,1 @@
-from .generate_images import generate_images
+from .generate_images import generate_image_text_to_image
