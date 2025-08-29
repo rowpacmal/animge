@@ -4,15 +4,13 @@ version = "0.1.0"
 description = "Simple AI text-to-image generator desktop application"
 readme = "README.md"
 requires-python = ">=3.9"
-authors = [
-    { name = "rowpacmal" }
-]
+authors = [{ name = "rowpacmal" }]
 dependencies = [
   "accelerate==1.10.1",
   "diffusers==0.35.1",
   "flet==0.28.3",
   "safetensors==0.6.2",
-  "transformers==4.55.4"
+  "transformers==4.55.4",
 ]
 
 [tool.flet]
@@ -34,12 +32,10 @@ copyright = "Copyright (C) 2025 by Flet"
 path = "src"
 
 [tool.uv]
-dev-dependencies = [
-    "flet[all]==0.28.3",
-]
+dev-dependencies = ["flet[all]==0.28.3"]
 
 [tool.poetry]
 package-mode = false
 
 [tool.poetry.group.dev.dependencies]
-flet = {extras = ["all"], version = "0.28.3"}
+flet = { extras = ["all"], version = "0.28.3" }
