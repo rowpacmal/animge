@@ -1,7 +1,7 @@
 [project]
 name = "animge"
 version = "0.1.0"
-description = "About Simple AI text-to-image generator desktop application"
+description = "Simple AI text-to-image generator desktop application"
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
