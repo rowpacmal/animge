@@ -1,3 +1,7 @@
-from .app_context import AppContext
+from .counter_context import CounterContext
 
-app_context = AppContext()
+class ContextProvider:
+  def __init__(self):
+    self.counter = CounterContext()
+
+app_contexts = ContextProvider()

@@ -7,12 +7,23 @@ class App:
     self.page = page
     self.counter = Counter()
     
-    counter_text, counter_fab = self.counter.get_widgets()
-    self.page.floating_action_button = counter_fab
+    counter_text, counter_fab_inc, counter_fab_dec = self.counter.get_widgets()
     self.page.add(ft.SafeArea(
-            ft.Container(
-                counter_text,
-                alignment=ft.alignment.center,
+            ft.Row(
+                [
+                  ft.Container(
+                      counter_fab_dec,
+                  ),
+                  ft.Container(
+                      counter_text,
+                      width=200,
+                      alignment=ft.alignment.center,
+                  ),
+                  ft.Container(
+                      counter_fab_inc,
+                  ),
+                ],
+                alignment=ft.MainAxisAlignment.CENTER
             ),
             expand=True,
         ))
