@@ -1,5 +1,5 @@
 import { IconPhotoFilled } from '@tabler/icons-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AdvanceSettings, UserTasks } from '../components';
 import styles from './AppMain.module.css';
 import { Carousel } from '../components/templates';
@@ -22,12 +22,6 @@ export function AppMain() {
   // const [seed, setSeed] = useState(0);
   const [batchSize, setBatchSize] = useState(1);
   const [isGenerating, setIsGenerating] = useState(false);
-
-  useEffect(() => {
-    (async function () {
-      console.log('tasks: ', await window.electron.getTempFolder());
-    })();
-  }, []);
 
   async function handleGenerateImage() {
     try {
@@ -84,7 +78,8 @@ export function AppMain() {
             <div
               className={
                 styles['moving-border'] +
-                ' relative bg-base-100 rounded-md border border-base-300 p-1 overflow-hidden'
+                ' relative bg-base-100 rounded-md border border-base-300 p-1 overflow-hidden' +
+                (isGenerating ? '' : ' before:hidden')
               }
             >
               <textarea
@@ -95,17 +90,17 @@ export function AppMain() {
               ></textarea>
             </div>
 
-            <div className="flex justify-between">
+            <div className="flex flex-col xl:flex-row justify-between gap-2 px-1">
               <div>
                 <select
-                  className="select select-secondary"
+                  className="select select-secondary w-full xl:w-auto"
                   disabled={isGenerating}
                   value={batchSize}
                   onChange={(e) => setBatchSize(parseInt(e.target.value))}
                 >
                   {[1, 2, 3, 4].map((n) => (
                     <option key={n} value={n}>
-                      Number of images: {n}
+                      Number of images : {n}
                     </option>
                   ))}
                 </select>

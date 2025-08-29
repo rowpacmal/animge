@@ -17,11 +17,14 @@ export async function readFolderRecursively(dirPath: string): Promise<TReadFolde
 
   for (const item of items) {
     const fullPath = path.join(dirPath, item.name);
+    const stat = await fs.stat(fullPath);
+
     if (item.isDirectory()) {
       results.push({
         name: item.name,
         type: "directory",
         children: await readFolderRecursively(fullPath),
+        timestamp: stat.mtimeMs,
       });
     } else {
       results.push({
