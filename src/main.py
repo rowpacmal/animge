@@ -2,11 +2,13 @@ import flet as ft
 
 
 def main(page: ft.Page):
-    counter = ft.Text("0", size=50, data=0)
+    count = 0
+    counter = ft.Text(str(count), size=50)
 
     def increment_click(e):
-        counter.data += 1
-        counter.value = str(counter.data)
+        nonlocal count
+        count += 1
+        counter.value = str(count)
         counter.update()
 
     page.floating_action_button = ft.FloatingActionButton(
