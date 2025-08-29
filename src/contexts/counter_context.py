@@ -1,19 +1,19 @@
 class CounterContext:
-  def __init__(self):
-    self.count = 0
-    self.subscribers = []
-  
-  def subscribe(self, callback):
-    self.subscribers.append(callback)
+    def __init__(self):
+        self.count = 0
+        self.subscribers = []
 
-  def increment(self):
-    self.count += 1
-    self._update()
+    def subscribe(self, callback):
+        self.subscribers.append(callback)
 
-  def decrement(self):
-    self.count -= 1
-    self._update()
-  
-  def _update(self):
-    for cb in self.subscribers:
-      cb()
+    def increment(self):
+        self.count += 1
+        self._update()
+
+    def decrement(self):
+        self.count -= 1
+        self._update()
+
+    def _update(self):
+        for cb in self.subscribers:
+            cb()
