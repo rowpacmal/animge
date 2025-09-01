@@ -6,7 +6,8 @@ from huggingface_hub import model_info
 
 
 # Directories
-CACHE_FOLDER = Path.cwd() / "storage" / ".cache"
+# CACHE_FOLDER = Path.cwd() / "storage" / ".cache"
+CACHE_FOLDER = Path.home() / "Documents" / "Animge" / "models"
 CACHE_FOLDER.mkdir(parents=True, exist_ok=True)
 
 
