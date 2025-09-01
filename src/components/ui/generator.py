@@ -19,4 +19,3 @@ class Generator(ft.Column):
     def before_update(self):
         if app_contexts.is_ready and not self.visible:
             self.visible = True
-        return super().before_update()

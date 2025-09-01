@@ -14,6 +14,10 @@ class ModelDownload(ft.Column):
     def __init__(self):
         super().__init__()
 
+        # Styles
+        self.width = 600
+        self.height = 200
+
         # States
         self.is_downloading = False
         self.progress = 0
@@ -39,8 +43,11 @@ class ModelDownload(ft.Column):
 
     def will_unmount(self):
         self.is_downloading = False
+
         for task in self.tasks:
             task.cancel()
+
+        self.tasks.clear()
 
     # Private
     async def _download_model(self):
