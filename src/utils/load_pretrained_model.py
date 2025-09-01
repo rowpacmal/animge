@@ -8,7 +8,7 @@ from diffusers.schedulers.scheduling_euler_ancestral_discrete import (
 )
 import torch
 
-# Application
+# Local
 from constants import CACHE_FOLDER, REPO_ID
 
 

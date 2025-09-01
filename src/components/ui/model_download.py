@@ -4,71 +4,68 @@ import asyncio
 # Core
 import flet as ft
 
-# Application
+# Local
 from .progress_bar import ProgressBar
-from constants import CACHE_FOLDER, REPO_ID, MODEL_SIZE
-from utils import get_folder_size, load_pretrained_model
+from utils import load_pretrained_model, track_download_progress
 
 
 class ModelDownload(ft.Column):
     def __init__(self):
         super().__init__()
-        self.downloading = False
-        self.progress = 0
-        self.total_size = MODEL_SIZE
-        self.alignment = ft.MainAxisAlignment.CENTER
 
+        # States
+        self.is_downloading = False
         self.pipe = None
+        self.progress = 0
         self.tasks = []
 
-        self.progress_text = ft.Text(value="0.00% (0.00 GB)", size=50)
+        # UI
+        self.progress_text = ft.Text(size=50)
         self.progress_bar = ProgressBar()
-
         self.controls = [
             self.progress_text,
             self.progress_bar,
         ]
 
+    # Inherited
     def did_mount(self):
         assert self.page is not None
 
-        self.downloading = True
-        download_task = self.page.run_task(self.update_progress)
-        progress_task = self.page.run_task(self.download_model)
-        self.tasks.append(download_task)
+        self.is_downloading = True
+        progress_task = self.page.run_task(self._update_progress)
+        download_task = self.page.run_task(self._download_model)
         self.tasks.append(progress_task)
+        self.tasks.append(download_task)
 
     def will_unmount(self):
-        self.downloading = False
+        self.is_downloading = False
         for task in self.tasks:
             task.cancel()
 
-    async def download_model(self):
+    # Private
+    async def _download_model(self):
         self.pipe = await asyncio.to_thread(
             load_pretrained_model,
         )
-        self.downloading = False
+        self.is_downloading = False
 
-    async def update_progress(self):
+    def _remove_ui(self):
         assert self.page is not None
         assert isinstance(self.parent, ft.Column)
 
-        while True:
-            current_size = get_folder_size(
-                str(CACHE_FOLDER / f"models--{REPO_ID.replace('/', '--')}")
-            )
-            self.progress = min((current_size / self.total_size) * 100, 100)
+        if self.parent:
+            self.parent.controls.remove(self)
+            self.page.update()
 
-            self.progress_text.value = (
-                f"{self.progress:.2f}% ({self.total_size / 1024**3:.2f} GB)"
-            )
-            self.progress_bar.value = self.progress / 100
-            self.update()
+    async def _update_progress(self):
+        await track_download_progress(
+            on_update=self._update_ui,
+            stop_flag=lambda: self.is_downloading,
+            on_complete=self._remove_ui,
+        )
 
-            if self.progress >= 100 and self.downloading is False:
-                if self.parent:
-                    self.parent.controls.remove(self)
-                    self.page.update()
-                break
-
-            await asyncio.sleep(1)
+    def _update_ui(self, progress, progress_text):
+        self.progress = progress
+        self.progress_text.value = progress_text
+        self.progress_bar.value = progress / 100
+        self.update()

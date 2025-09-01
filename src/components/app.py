@@ -1,7 +1,7 @@
 # Core
 import flet as ft
 
-# Application
+# Local
 from components.ui import ModelDownload
 
 
