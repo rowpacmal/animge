@@ -6,6 +6,7 @@ import flet as ft
 
 # Local
 from .progress_bar import ProgressBar
+from contexts import app_contexts
 from utils import load_pretrained_model, track_download_progress
 
 
@@ -15,7 +16,6 @@ class ModelDownload(ft.Column):
 
         # States
         self.is_downloading = False
-        self.pipe = None
         self.progress = 0
         self.tasks = []
 
@@ -44,16 +44,21 @@ class ModelDownload(ft.Column):
 
     # Private
     async def _download_model(self):
-        self.pipe = await asyncio.to_thread(
-            load_pretrained_model,
-        )
-        self.is_downloading = False
+        try:
+            app_contexts.pipe = await asyncio.to_thread(
+                load_pretrained_model,
+            )
+        except Exception as e:
+            app_contexts.error = str(e)
+        finally:
+            self.is_downloading = False
 
     def _remove_ui(self):
         assert self.page is not None
         assert isinstance(self.parent, ft.Column)
 
         if self.parent:
+            app_contexts.is_ready = True
             self.parent.controls.remove(self)
             self.page.update()
 

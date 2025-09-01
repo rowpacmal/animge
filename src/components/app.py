@@ -2,7 +2,7 @@
 import flet as ft
 
 # Local
-from components.ui import ModelDownload
+from components.ui import Generator, ModelDownload
 
 
 class App:
@@ -12,7 +12,7 @@ class App:
         self.page.padding = 0
         self.page.add(
             ft.Column(
-                controls=[ModelDownload()],
+                controls=[ModelDownload(), Generator()],
                 alignment=ft.MainAxisAlignment.CENTER,
                 expand=True,
             )
