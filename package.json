@@ -1,0 +1,22 @@
+{
+  "name": "animge-electron",
+  "productName": "Animge",
+  "description": "Simple AI text-to-image generator desktop app",
+  "author": "rowpacmal",
+  "license": "MIT",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "npm-run-all -p dev:*",
+    "dev:electron": "npm run dev --prefix electron",
+    "dev:python": "fastapi dev ./python/run.py"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  },
+  "keywords": [
+    "electron",
+    "react",
+    "python"
+  ]
+}
