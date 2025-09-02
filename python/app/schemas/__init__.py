@@ -1,2 +1,6 @@
 from .prompt import PromptRequest
-from .model import ModelRequest
+from .model import (
+    LoadModelRequest,
+    UpdateModelDeviceRequest,
+    UpdateModelSchedulerRequest,
+)

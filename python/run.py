@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 # Third-party
 from fastapi import FastAPI, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 # Local
 from app.routes import images_router, models_router
@@ -56,8 +57,15 @@ api_router = APIRouter(prefix="/api/v1")
 
 # API Endpoints
 @api_router.get("/")
-def root(api: Request):
-    return {"detail": "Welcome to Animge API v1"}
+def root(request: Request):
+    return JSONResponse(
+        status_code=200,
+        content={
+            "success": True,
+            "error": None,
+            "message": "Welcome to Animge API v1",
+        },
+    )
 
 
 # Include routers

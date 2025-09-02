@@ -1,1 +1,1 @@
-from .generate_images import generate_image_text_to_image
+from .models import get_pipeline_by_repo_id
