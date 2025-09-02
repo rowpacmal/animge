@@ -1,29 +1,29 @@
-# Standard libraries
+# Standard
+import asyncio
 from contextlib import asynccontextmanager
 
-# Third-party libraries
-from accelerate import Accelerator
+# Third-party
 from fastapi import FastAPI, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-# Local application imports
-from app.routes import downloads_router, pipelines_router
+# Local
+from app.routes import images_router, models_router
 
 
 # Initialize FastAPI
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # On startup
-    print("App starting...")
-    accelerator = Accelerator()
-    app.state.accelerator = accelerator
-    app.state.device = accelerator.device
-    app.state.pipe = None
+    print("Starting Animge API...")
+    app.state.api_lock = asyncio.Lock()
+    app.state.pipeline = None
 
     yield
 
     # On shutdown
-    print("App shutting down...")
+    print("Shutting down Animge API...")
+    del app.state.api_lock
+    del app.state.pipeline
 
 
 app = FastAPI(
@@ -32,10 +32,6 @@ app = FastAPI(
     version="1.0",
     description="AI text-to-image generation API for Animge",
 )
-
-
-# API Router
-api_router = APIRouter(prefix="/api/v1")
 
 
 # CORS
@@ -54,6 +50,10 @@ app.add_middleware(
 )
 
 
+# API Router
+api_router = APIRouter(prefix="/api/v1")
+
+
 # API Endpoints
 @api_router.get("/")
 def root(api: Request):
@@ -61,6 +61,6 @@ def root(api: Request):
 
 
 # Include routers
-api_router.include_router(downloads_router)
-api_router.include_router(pipelines_router)
+api_router.include_router(images_router)
+api_router.include_router(models_router)
 app.include_router(api_router)

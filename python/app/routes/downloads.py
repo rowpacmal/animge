@@ -8,7 +8,7 @@ from fastapi.responses import StreamingResponse
 from huggingface_hub import snapshot_download
 
 # Local application imports
-from app.constants import CACHE_DIR, MODEL_ID
+from app.constants import CACHE_DIR, REPO_ID
 from app.utils import create_pipeline_text_to_image
 
 
@@ -30,7 +30,7 @@ async def download_model(request: Request):
         def run_download():
             try:
                 # Download model
-                snapshot_download(repo_id=MODEL_ID, cache_dir=str(CACHE_DIR))
+                snapshot_download(repo_id=REPO_ID, cache_dir=str(CACHE_DIR))
 
                 if request.app.state.pipe is None:
                     request.app.state.pipe = create_pipeline_text_to_image(

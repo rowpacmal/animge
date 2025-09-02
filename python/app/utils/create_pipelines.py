@@ -8,13 +8,13 @@ from diffusers.schedulers.scheduling_euler_ancestral_discrete import (
 import torch
 
 # Local application imports
-from app.constants import CACHE_DIR, MODEL_ID
+from app.constants import CACHE_DIR, REPO_ID
 
 
 def create_pipeline_text_to_image(device: torch.device):
     # Load stable diffusion pipeline
     pipe = StableDiffusionPipeline.from_pretrained(
-        MODEL_ID,
+        REPO_ID,
         cache_dir=str(CACHE_DIR),
         torch_dtype=torch.float16,
         use_safetensors=True,

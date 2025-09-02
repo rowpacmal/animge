@@ -1,2 +1,2 @@
-from .downloads import downloads_router
-from .pipelines import pipelines_router
+from .images import images_router
+from .models import models_router

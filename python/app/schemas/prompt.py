@@ -1,8 +1,8 @@
-# Standard libraries
+# Standard
 from pydantic import BaseModel
 
 
-# Prompt Request Schema
+# Schema
 class PromptRequest(BaseModel):
     prompt: str
     negative_prompt: str | None = None
