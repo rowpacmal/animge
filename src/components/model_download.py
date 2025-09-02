@@ -5,7 +5,7 @@ import asyncio
 import flet as ft
 
 # Local
-from .progress_bar import ProgressBar
+from components.ui import ProgressBar
 from contexts import app_contexts
 from utils import load_pretrained_model, track_download_progress
 

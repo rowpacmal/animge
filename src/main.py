@@ -1,11 +1,13 @@
 import flet as ft
 
-from components import App
+
+from layouts import AppFooter, AppHeader, AppMain
 
 
 def main(page: ft.Page):
     # Page
     page.title = "Animge"
+    page.theme_mode = ft.ThemeMode.DARK
 
     # Window
     page.window.maximized = True
@@ -17,7 +19,10 @@ def main(page: ft.Page):
     page.padding = 0
 
     # UI
-    page.add(App())
+    page.appbar = AppHeader()
+    page.bottom_appbar = AppFooter()
+
+    page.add(AppMain())
 
 
 ft.app(main)

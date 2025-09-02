@@ -2,7 +2,7 @@
 import flet as ft
 
 # Local
-from components.ui import Generator, ModelDownload
+from components import Generator, ModelDownload
 
 
 class AppMain(ft.Column):
