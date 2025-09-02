@@ -15,8 +15,6 @@ class ModelDownload(ft.Column):
         super().__init__()
 
         # Styles
-        self.width = 600
-        self.height = 200
 
         # States
         self.is_downloading = False
@@ -24,7 +22,7 @@ class ModelDownload(ft.Column):
         self.tasks = []
 
         # UI
-        self.progress_text = ft.Text(size=50)
+        self.progress_text = ft.Text(size=20)
         self.progress_bar = ProgressBar()
         self.controls = [
             self.progress_text,
@@ -65,8 +63,8 @@ class ModelDownload(ft.Column):
         assert isinstance(self.parent, ft.Column)
 
         if self.parent:
-            app_contexts.is_ready = True
-            self.parent.controls.remove(self)
+            # app_contexts.is_ready = True
+            # self.parent.controls.remove(self)
             self.page.update()
 
     async def _update_progress(self):
