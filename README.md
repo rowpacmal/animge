@@ -1,6 +1,6 @@
 # Animge
 
-Simple AI text-to-image generator desktop app
+Simple AI text-to-image generator desktop app (work-in-progress)
 
 ## Tech Stack
 
