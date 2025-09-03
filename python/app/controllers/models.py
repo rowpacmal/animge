@@ -2,7 +2,9 @@
 from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion import (
     StableDiffusionPipeline,
 )
-from diffusers.utils.dummy_pt_objects import EulerAncestralDiscreteScheduler
+from diffusers.schedulers.scheduling_euler_ancestral_discrete import (
+    EulerAncestralDiscreteScheduler,
+)
 import torch
 
 

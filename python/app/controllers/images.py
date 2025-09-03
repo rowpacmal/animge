@@ -36,6 +36,6 @@ def get_generated_images(
         num_images_per_prompt=batch_size,
         generator=generators,
     )
-    images, _ = output
+    images = output[0]
 
     return images, used_seeds
