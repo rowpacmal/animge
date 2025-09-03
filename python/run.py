@@ -60,8 +60,6 @@ api_router = APIRouter(prefix="/api/v1")
 @api_router.get("/", response_model=ApiResponse, status_code=HTTP_200_OK)
 def root(request: Request):
     return ApiResponse(
-        success=True,
-        error=None,
         message="Welcome to Animge API v1",
         data=None,
     )

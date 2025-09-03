@@ -51,8 +51,6 @@ async def generate_images(request: Request, body: PromptRequest):
             )
 
             return ApiResponse(
-                success=True,
-                error=None,
                 message="Images generated successfully.",
                 data={
                     "task_id": task_id,

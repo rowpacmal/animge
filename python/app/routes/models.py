@@ -20,8 +20,6 @@ models_router = APIRouter(prefix="/models", tags=["models"])
 @models_router.get("/", response_model=ApiResponse, status_code=HTTP_200_OK)
 def list_models():
     return ApiResponse(
-        success=True,
-        error=None,
         message="Models list retrieved successfully.",
         data=[
             {
@@ -47,8 +45,6 @@ async def load_model(request: Request):
             request.app.state.pipeline = get_stable_diffusion_pipeline()
 
             return ApiResponse(
-                success=True,
-                error=None,
                 message="Model loaded successfully.",
                 data={
                     "is_loaded": True,
@@ -75,8 +71,6 @@ async def unload_model(request: Request):
             request.app.state.pipeline = None
 
             return ApiResponse(
-                success=True,
-                error=None,
                 message="Model unloaded successfully.",
                 data={
                     "is_loaded": False,
