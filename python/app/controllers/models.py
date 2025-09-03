@@ -1,6 +1,6 @@
 # Third-party
-from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion import (
-    StableDiffusionPipeline,
+from diffusers.pipelines.stable_diffusion_xl.pipeline_stable_diffusion_xl import (
+    StableDiffusionXLPipeline,
 )
 from diffusers.schedulers.scheduling_euler_ancestral_discrete import (
     EulerAncestralDiscreteScheduler,
@@ -13,7 +13,7 @@ from app.constants import CACHE_DIR, REPO_ID
 
 
 def get_stable_diffusion_pipeline():
-    pipe = StableDiffusionPipeline.from_pretrained(
+    pipe = StableDiffusionXLPipeline.from_pretrained(
         REPO_ID,
         cache_dir=str(CACHE_DIR),
         torch_dtype=torch.float16,
