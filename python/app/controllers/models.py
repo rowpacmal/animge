@@ -2,17 +2,17 @@
 from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion import (
     StableDiffusionPipeline,
 )
+from diffusers.utils.dummy_pt_objects import EulerAncestralDiscreteScheduler
 import torch
 
 
 # Local
-from app.constants import CACHE_DIR
-from app.utils import get_scheduler
+from app.constants import CACHE_DIR, REPO_ID
 
 
-def get_pipeline_by_repo_id(repo_id: str, scheduler_type: str, device: torch.device):
+def get_pipeline_by_repo_id():
     pipe = StableDiffusionPipeline.from_pretrained(
-        repo_id,
+        REPO_ID,
         cache_dir=str(CACHE_DIR),
         torch_dtype=torch.float16,
         use_safetensors=True,
@@ -20,7 +20,7 @@ def get_pipeline_by_repo_id(repo_id: str, scheduler_type: str, device: torch.dev
         add_watermarker=False,
     )
 
-    pipe.scheduler = get_scheduler(scheduler_type, pipe.scheduler.config)
-    pipe.to(device)
+    pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(pipe.scheduler.config)
+    pipe.to(torch.device("cuda"))
 
     return pipe
