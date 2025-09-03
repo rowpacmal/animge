@@ -9,7 +9,7 @@ from starlette.status import (
 # Local
 from app.controllers import get_generated_images
 from app.schemas import ApiResponse, PromptRequest
-from app.utils import save_images
+from app.utils import get_token_count, save_images
 
 
 # Initialize router
@@ -24,6 +24,14 @@ async def generate_images(request: Request, body: PromptRequest):
             raise HTTPException(
                 status_code=HTTP_400_BAD_REQUEST,
                 detail="No model is loaded.",
+            )
+
+        token_count = get_token_count(body.prompt)
+
+        if token_count > 77:
+            raise HTTPException(
+                status_code=HTTP_400_BAD_REQUEST,
+                detail=f"Prompt is too long, max length is 77 tokens. Current length is {token_count} tokens.",
             )
 
         try:
