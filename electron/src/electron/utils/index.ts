@@ -1,3 +1,3 @@
-export * from './pathResolver.js';
-export * from './readFolderRecursively.js';
-export * from './isDev.js';
+export * from './path-resolver.js';
+export * from './read-folder-recursively.js';
+export * from './is-dev.js';
