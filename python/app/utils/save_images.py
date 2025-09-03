@@ -1,10 +1,10 @@
-# Standard libraries
+# Standard
 from uuid import uuid4
 
-# Third-party libraries
+# Third-party
 from PIL import PngImagePlugin
 
-# Local application imports
+# Local
 from app.constants import TEMP_DIR
 
 

@@ -5,10 +5,11 @@ from contextlib import asynccontextmanager
 # Third-party
 from fastapi import FastAPI, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from starlette.status import HTTP_200_OK
 
 # Local
 from app.routes import images_router, models_router
+from app.schemas import ApiResponse
 
 
 # Initialize FastAPI
@@ -56,15 +57,13 @@ api_router = APIRouter(prefix="/api/v1")
 
 
 # API Endpoints
-@api_router.get("/")
+@api_router.get("/", response_model=ApiResponse, status_code=HTTP_200_OK)
 def root(request: Request):
-    return JSONResponse(
-        status_code=200,
-        content={
-            "success": True,
-            "error": None,
-            "message": "Welcome to Animge API v1",
-        },
+    return ApiResponse(
+        success=True,
+        error=None,
+        message="Welcome to Animge API v1",
+        data=None,
     )
 
 
