@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 
 # Local
 from app.constants import REPO_ID, REPO_TOTAL_SIZE
-from app.controllers import get_pipeline_by_repo_id
+from app.controllers import get_stable_diffusion_pipeline
 
 
 # Initialize router
@@ -40,14 +40,17 @@ async def load_model(request: Request):
             )
 
         try:
-            request.app.state.pipeline = get_pipeline_by_repo_id()
+            request.app.state.pipeline = get_stable_diffusion_pipeline()
 
             return JSONResponse(
                 status_code=200,
                 content={
                     "success": True,
                     "error": None,
-                    "message": f"Model '{REPO_ID}' loaded.",
+                    "message": {
+                        "is_loaded": True,
+                        "repo_id": REPO_ID,
+                    },
                 },
             )
 
@@ -71,7 +74,10 @@ async def unload_model(request: Request):
                 content={
                     "success": True,
                     "error": None,
-                    "message": "Model unloaded.",
+                    "message": {
+                        "is_loaded": False,
+                        "repo_id": REPO_ID,
+                    },
                 },
             )
 

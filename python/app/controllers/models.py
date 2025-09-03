@@ -10,7 +10,7 @@ import torch
 from app.constants import CACHE_DIR, REPO_ID
 
 
-def get_pipeline_by_repo_id():
+def get_stable_diffusion_pipeline():
     pipe = StableDiffusionPipeline.from_pretrained(
         REPO_ID,
         cache_dir=str(CACHE_DIR),

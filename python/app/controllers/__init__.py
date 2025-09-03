@@ -1,1 +1,2 @@
-from .models import get_pipeline_by_repo_id
+from .images import generate_images
+from .models import get_stable_diffusion_pipeline
