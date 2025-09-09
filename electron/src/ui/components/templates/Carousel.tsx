@@ -19,30 +19,38 @@ export function Carousel({ images }: { images: string[] }) {
             >
               <img src={image} className="w-full object-cover object-top" />
 
-              <div className="absolute left-0 right-0 top-0 p-4 flex justify-end">
+              <div className="absolute left-0 right-0 top-0 p-4 flex justify-between">
+                <p className="text-sm text-primary bg-base-100 rounded-lg py-1 px-2 h-fit">
+                  {i + 1} / {images.length}
+                </p>
+
                 <button className="btn btn-primary btn-circle btn-soft">
                   <IconDots />
                 </button>
               </div>
 
               <div className="absolute left-0 right-0 bottom-0 p-4 flex justify-between">
-                <a
-                  href={`#slide${i - 1 === -1 ? images.length - 1 : i - 1}`}
-                  className="btn btn-primary btn-circle btn-soft"
-                >
-                  <IconChevronLeft />
-                </a>
+                {images.length > 1 && (
+                  <a
+                    href={`#slide${i - 1 === -1 ? images.length - 1 : i - 1}`}
+                    className="btn btn-primary btn-circle btn-soft"
+                  >
+                    <IconChevronLeft />
+                  </a>
+                )}
 
-                <button className="btn btn-primary btn-circle btn-soft">
+                <button className="btn btn-primary btn-circle btn-soft mx-auto">
                   <IconSearch />
                 </button>
 
-                <a
-                  href={`#slide${i + 2 === images.length + 1 ? 0 : i + 1}`}
-                  className="btn btn-primary btn-circle btn-soft"
-                >
-                  <IconChevronRight />
-                </a>
+                {images.length > 1 && (
+                  <a
+                    href={`#slide${i + 2 === images.length + 1 ? 0 : i + 1}`}
+                    className="btn btn-primary btn-circle btn-soft"
+                  >
+                    <IconChevronRight />
+                  </a>
+                )}
               </div>
             </div>
           ))}
