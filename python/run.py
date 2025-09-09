@@ -1,11 +1,13 @@
 # Standard
-import asyncio
 from contextlib import asynccontextmanager
+import asyncio
+import sys
 
 # Third-party
 from fastapi import FastAPI, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.status import HTTP_200_OK
+import uvicorn
 
 # Local
 from app.routes import images_router, models_router
@@ -69,3 +71,19 @@ def root(request: Request):
 api_router.include_router(images_router)
 api_router.include_router(models_router)
 app.include_router(api_router)
+
+
+def main():
+    port = 8000
+
+    if len(sys.argv) > 1:
+        try:
+            port = int(sys.argv[1])
+        except ValueError:
+            print("Invalid port number. Using default port 8000.")
+
+    uvicorn.run("run:app", host="127.0.0.1", port=port)
+
+
+if __name__ == "__main__":
+    main()
